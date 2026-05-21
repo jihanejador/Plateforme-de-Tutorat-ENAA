@@ -44,4 +44,14 @@ class TicketRepository {
         }
         return $tickets;
     }
+
+    public function update(HelpRequest $ticket): bool{
+        $stmt = $this->pdo->prepare("UPDATE help_requests SET statut = :statut, tuteur_id = :tuteur_id 
+        WHERE id = :id");
+        return $stmt->execute([
+            'statut'=> $ticket->getStatut()->value,
+            'tuteur_id'=> $ticket->getTuteurId(),
+            'id' => $ticket->getId()
+        ]);
+    }
 }
