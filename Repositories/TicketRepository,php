@@ -24,4 +24,24 @@ class TicketRepository {
             'apprenant_id'=> $ticket->getApprenantId()
         ]);
     }
+
+    public function findAllPending(): array {
+        $stmt = $this->pdo->query("SELECT * FROM help_requests 
+        WHERE statut = 'PENDING' 
+        ORDER BY date_creation DESC");
+        $rows = $stmt->fetchAll(PDO::FETCH_OBJ);
+
+        $tickets = [];
+        foreach ($rows as $row){
+            $ticket = new HelpRequest();
+            $ticket->setId((int)$row->id);
+            $ticket->setTitre($row->titre);
+            $ticket->srtDescription($row->description);
+            $ticket->setTechnologie($row->technologie);
+            $ticket->setStatut(Statut::from($row->statut));
+            $ticket->setApprenantId((int)$row->apprenant_id);
+            $tickets[] = $ticket;
+        }
+        return $tickets;
+    }
 }
