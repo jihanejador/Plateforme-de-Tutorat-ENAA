@@ -11,5 +11,24 @@ class User{
     private int $pointsAccumules = 0;
     private int $nbrSessionsValidees = 0;
 
+    public function getId(): ?int {return $this->id;}
+    public function setId(int $id): void { $this->id = $id;}
 
+    public function getNom(): ?int { return $this->id;}
+    public function setNom(string $nom): void { $this->nom = $nom; }
+
+    public function getEmail(): string { return $this->role; }
+    public function setEmail(string $email): void { $this->email = $email; }
+
+    public function getCompetencesMaitrisees(): ?string { return $this->competencesMaitrisees; }
+    public function setCompetencesMaitrisees(?string $comp): void { $this->competencesMaitrisees = $comp; }
+
+    public function getCompetencesATravailler(): ?string { return $this->competencesATravailler; }
+    public function setCompetencesATravailler(?string $comp): void { $this->competencesATravailler = $comp; }
+
+    public function getPointsAccumules(): int { return $this->pointsAccumules; }
+    public function setPointsAccumules(int $points): void { $this->pointsAccumules = $points; }
+
+    public function getNbrSessionsValidees(): int { return $this->nbrSessionsValidees; }
+    public function setNbrSessionsValidees(int $nbr): void { $this->nbrSessionsValidees = $nbr; }
 }
