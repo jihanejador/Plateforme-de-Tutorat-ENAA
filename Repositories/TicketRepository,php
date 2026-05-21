@@ -54,4 +54,14 @@ class TicketRepository {
             'id' => $ticket->getId()
         ]);
     }
+
+    public function saveReview(Review $review): bool{
+        $stmt = $this->pdo->prepare("INSERT INTO reviews (note, commentaire, help_request_id)
+        VALUES (:note, :commentaire, :help_request_id)");
+        return $stmt->execute([
+            'note' => $review->getNote(),
+            'commentaire' => $review->getCommentaire(),
+            'help_request_id' => $review->getHelpRequestId()
+        ]);
+    }
 }
