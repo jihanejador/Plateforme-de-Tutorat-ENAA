@@ -1,0 +1,11 @@
+<?php
+namespace Repositories;
+
+use PDO;
+use Entities\HelpRequest;
+use Entities\Review;
+use Enums\Statut;
+
+class TicketRepository {
+    private PDO $pdo;
+}
