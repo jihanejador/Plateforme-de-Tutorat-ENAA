@@ -15,4 +15,11 @@ class Review{
         }
         $this->note = $note;
     }
+    public function getNote(): int { return $this->note; }
+    public function getId(): ?int { return $this->id; }
+    public function setId(int $id): void { $this->id = $id; }
+    public function getCommentaire(): ?string { return $this->commentaire; }
+    public function setCommentaire(?string $comm): void { $this->commentaire = $comm; }
+    public function getHelpRequestId(): int { return $this->helpRequestId; }
+    public function setHelpRequestId(int $id): void { $this->helpRequestId = $id; }
 }
