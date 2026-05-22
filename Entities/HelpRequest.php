@@ -9,7 +9,7 @@ class HelpRequest {
     private string $titre;
     private string $description;
     private string $technologie;
-    private Statut $statut;
+    private string $statut;
     private string $dateCreation;
     private int $apprenantId;
     private ?int $tuteurId = null;

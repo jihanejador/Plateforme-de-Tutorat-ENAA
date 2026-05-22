@@ -22,9 +22,9 @@ $action = $_GET['action'] ?? '';
 try{
     if($action === 'create' && $_SERVER['REQUEST_METHOD'] === 'POST'){
         $ticket = new \Entities\HelpRequest();
-        $ticket->setTitre(string: $_POST['titre']);
-        $ticket->setDescription(string: $_POST['description']);
-        $ticket->setTechnologie(string: $_POST['technologie']);
+        $ticket->setTitre($_POST['titre']);
+        $ticket->setDescription($_POST['description']);
+        $ticket->setTechnologie( $_POST['technologie']);
         $ticket->setStatut(\Enums\Statut::PENDING);
         $ticket->setApprenantId((int)$_SESSION['user_id']);
 
