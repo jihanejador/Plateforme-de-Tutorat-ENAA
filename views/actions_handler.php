@@ -18,13 +18,12 @@ $action = $_GET['action'] ?? '';
 
 try {
    
+    
     if ($action === 'login' && $_SERVER['REQUEST_METHOD'] === 'POST') {
         $email = $_POST['email'];
         $password = $_POST['password'];
 
-       
         $user = $userRepo->findByEmail($email);
-
         
         if ($user && $password === '123456') { 
             $_SESSION['user_id'] = $user->getId();
@@ -35,6 +34,44 @@ try {
             exit();
         } else {
             header('Location: login.php?error=auth_failed');
+            exit();
+        }
+    }
+
+    
+    if ($action === 'register' && $_SERVER['REQUEST_METHOD'] === 'POST') {
+        $nom = $_POST['nom'];
+        $email = $_POST['email'];
+        $role = $_POST['role'];
+        $competences = $_POST['competences'] ?? '';
+
+        
+        if ($userRepo->findByEmail($email)) {
+            header('Location: register.php?error=email_exists');
+            exit();
+        }
+
+       
+        $user = new \Entities\User();
+        $user->setNom($nom);
+        $user->setEmail($email);
+        $user->setRole($role);
+        $user->setPassword('123456'); 
+
+        if ($role === 'TUTEUR') {
+            $user->setCompetencesMaitrisees($competences);
+            $user->setCompetencesATravailler('');
+        } else {
+            $user->setCompetencesATravailler($competences);
+            $user->setCompetencesMaitrisees('');
+        }
+
+        
+        if ($userRepo->save($user)) {
+            header('Location: login.php?success=registered');
+            exit();
+        } else {
+            header('Location: register.php?error=failed');
             exit();
         }
     }
@@ -58,7 +95,7 @@ try {
         exit();
     }
 
-    
+ 
     if ($action === 'assign') {
         if (!isset($_SESSION['user_id']) || $_SESSION['user_role'] !== 'TUTEUR') {
             die("Erreur : Seul un tuteur peut prendre en charge un ticket.");
@@ -83,7 +120,7 @@ try {
         exit();
     }
 
-    
+
     if ($action === 'resolve' && $_SERVER['REQUEST_METHOD'] === 'POST') {
         if (!isset($_SESSION['user_id'])) {
             header('Location: login.php');
