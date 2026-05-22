@@ -59,5 +59,10 @@ try{
         $ticket->setStatut(\Enums\Statut::RESOLVED);
         $ticket->setTuteurId(3); //lie au tuteur youssef
         $ticketRepo->update($ticket);
+
+        $review = new \Entities\Review();
+        $review->setNote($note);
+        $review->setCommentaire($commentaire);
+        $review->setHelpRequestId($ticketId);
     }
 }
