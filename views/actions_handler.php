@@ -35,5 +35,8 @@ try{
 
     if($action === 'assign'){
         $ticketId = (int)$_GET['ticket_id'];
+
+        $_SESSION['user_id'] = 3;
+        $tuteurObj = $userRepo->findById(3);
     }
 }
