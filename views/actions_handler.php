@@ -18,15 +18,13 @@ $action = $_GET['action'] ?? '';
 
 try {
    
-    // ================= 1️⃣ ACTION : LOGIN DYNAMIQUE =================
     if ($action === 'login' && $_SERVER['REQUEST_METHOD'] === 'POST') {
         $email = $_POST['email'];
         $password = $_POST['password'];
 
         $user = $userRepo->findByEmail($email);
         
-        // ✨ المقارنة مع الباسورد الحقيقي اللي تسجل ف الداتابيز
-        if ($user && $password === $user->getPassword()) { 
+        if ($user && $user->getPassword() !== null && $password === $user->getPassword()) { 
             $_SESSION['user_id'] = $user->getId();
             $_SESSION['user_nom'] = $user->getNom();
             $_SESSION['user_role'] = $user->getRole(); 
@@ -39,7 +37,6 @@ try {
         }
     }
 
-    // ================= 2️⃣ ACTION : REGISTER DYNAMIQUE =================
     if ($action === 'register' && $_SERVER['REQUEST_METHOD'] === 'POST') {
         $nom = $_POST['nom'];
         $email = $_POST['email'];
@@ -56,7 +53,7 @@ try {
         $user->setNom($nom);
         $user->setEmail($email);
         $user->setRole($role);
-        $user->setPassword($password); // ✨ كيحط الباسورد المختار من الفورم
+        $user->setPassword($password); 
 
         if ($role === 'TUTEUR') {
             $user->setCompetencesMaitrisees($competences);
@@ -75,7 +72,6 @@ try {
         }
     }
 
-    // ================= 3️⃣ ACTION : CREATE TICKET =================
     if ($action === 'create' && $_SERVER['REQUEST_METHOD'] === 'POST') {
        
         if (!isset($_SESSION['user_id'])) {
@@ -94,7 +90,6 @@ try {
         exit();
     }
 
-    // ================= 4️⃣ ACTION : ASSIGN TICKET =================
     if ($action === 'assign') {
         if (!isset($_SESSION['user_id']) || $_SESSION['user_role'] !== 'TUTEUR') {
             die("Erreur : Seul un tuteur peut prendre en charge un ticket.");
@@ -119,7 +114,6 @@ try {
         exit();
     }
 
-    // ================= 5️⃣ ACTION : RESOLVE TICKET =================
     if ($action === 'resolve' && $_SERVER['REQUEST_METHOD'] === 'POST') {
         if (!isset($_SESSION['user_id'])) {
             header('Location: login.php');
