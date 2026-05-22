@@ -21,6 +21,12 @@ if (isset($_SESSION['user_id']) && isset($_SESSION['user_nom']) && isset($_SESSI
             <p class="text-gray-500 mt-2">Connectez-vous pour accéder à l'entraide</p>
         </div>
 
+        <?php if (isset($_GET['success']) && $_GET['success'] === 'registered'): ?>
+            <div class="bg-green-100 text-green-700 p-3 rounded-lg text-sm mb-4 text-center font-medium">
+                ✅ Inscription réussie ! Vous pouvez vous connecter.
+            </div>
+        <?php endif; ?>
+
         <?php if (isset($_GET['error'])): ?>
             <div class="bg-red-100 text-red-700 p-3 rounded-lg text-sm mb-4 text-center font-medium">
                 ❌ Email ou mot de passe incorrect.
@@ -44,6 +50,10 @@ if (isset($_SESSION['user_id']) && isset($_SESSION['user_nom']) && isset($_SESSI
                 Se connecter
             </button>
         </form>
+
+        <p class="text-sm text-center text-gray-500 mt-4">
+            Nouveau sur la plateforme ? <a href="register.php" class="text-indigo-600 font-semibold hover:underline">Créer un compte</a>
+        </p>
 
         <div class="mt-6 text-xs text-center text-gray-400 bg-gray-50 p-2.5 rounded-lg border border-dashed">
             💡 <strong>Comptes de Démo :</strong><br>
