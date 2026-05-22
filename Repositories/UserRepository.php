@@ -7,10 +7,11 @@ use Entities\User;
 class UserRepository {
     private PDO $pdo;
 
-
     public function __construct(PDO $pdo){
         $this->pdo = $pdo;
     }
+
+    
     public function findByEmail(string $email): ?User {
         $stmt = $this->pdo->prepare("SELECT * FROM users WHERE email = :email");
         $stmt->execute(['email'=> $email]);
@@ -23,10 +24,12 @@ class UserRepository {
         $user->setNom($row->nom);
         $user->setEmail($row->email);
         $user->setRole($row->role);
-        $user->setCompetencesMaitrisees($row->competences_maitrisees);
-        $user->setCompetencesATravailler($row->competences_a_travailler);
+        $user->setCompetencesMaitrisees($row->competences_maitrisees ?? '');
+        $user->setCompetencesATravailler($row->competences_a_travailler ?? '');
         return $user;
     }
+
+    
     public function findById(int $id): ?User {
         $stmt = $this->pdo->prepare("SELECT * FROM users WHERE id = :id");
         $stmt->execute(['id'=> $id]);
@@ -38,6 +41,8 @@ class UserRepository {
         $user->setNom($row->nom);
         $user->setEmail($row->email);
         $user->setRole($row->role);
+        $user->setCompetencesMaitrisees($row->competences_maitrisees ?? '');
+        $user->setCompetencesATravailler($row->competences_a_travailler ?? '');
         return $user;
     }
 }
