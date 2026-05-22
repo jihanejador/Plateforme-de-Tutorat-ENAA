@@ -1,8 +1,13 @@
 <?php
 namespace Enums;
 
-enum Statut: string {
-    case PENDING = 'PENDING';
-    case ASSIGNED = 'ASSIGNED';
-    case RESOLVED = 'RESOLVED';
+class Statut {
+    const PENDING = 'PENDING';
+    const ASSIGNED = 'ASSIGNED';
+    const RESOLVED = 'RESOLVED';
+
+    
+    public static function from(string $value): string {
+        return $value;
+    }
 }
