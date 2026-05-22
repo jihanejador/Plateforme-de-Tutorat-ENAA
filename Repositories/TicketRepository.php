@@ -49,7 +49,7 @@ class TicketRepository {
         $stmt = $this->pdo->prepare("UPDATE help_requests SET statut = :statut, tuteur_id = :tuteur_id 
         WHERE id = :id");
         return $stmt->execute([
-            'statut'=> $ticket->getStatut()->value,
+            'statut'=> $ticket->getStatut(), // ✨ Cleaned & Safe string
             'tuteur_id'=> $ticket->getTuteurId(),
             'id' => $ticket->getId()
         ]);
