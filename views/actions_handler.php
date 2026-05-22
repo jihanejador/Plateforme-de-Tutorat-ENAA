@@ -46,5 +46,6 @@ try{
 
         $ticketRepo->update($ticket);
         header('Location: dashboard.php?success=ticket_assigned');
+        exit();
     }
 }
