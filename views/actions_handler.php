@@ -38,5 +38,9 @@ try{
 
         $_SESSION['user_id'] = 3;
         $tuteurObj = $userRepo->findById(3);
+
+        $ticket = new \Entities\HelpRequest();
+        $ticket->setId($ticketId);
+        $ticket->setApprenantId(1);
     }
 }
