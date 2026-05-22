@@ -10,7 +10,7 @@ class User{
     private ?string $competencesATravailler = null;
     private int $pointsAccumules = 0;
     private int $nbrSessionsValidees = 0;
-    private string $password;
+    private ?string $password = null;
 
     public function getId(): ?int {return $this->id;}
     public function setId(int $id): void { $this->id = $id;}
