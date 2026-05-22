@@ -26,6 +26,9 @@ class UserRepository {
         $user->setRole($row->role);
         $user->setCompetencesMaitrisees($row->competences_maitrisees ?? '');
         $user->setCompetencesATravailler($row->competences_a_travailler ?? '');
+        
+        $user->setPassword($row->password ?? null); 
+        
         return $user;
     }
 
@@ -43,19 +46,32 @@ class UserRepository {
         $user->setRole($row->role);
         $user->setCompetencesMaitrisees($row->competences_maitrisees ?? '');
         $user->setCompetencesATravailler($row->competences_a_travailler ?? '');
+        
+        $user->setPassword($row->password ?? null); 
+        
         return $user;
     }
 
-    public function save(User $user): bool {
-        $stmt = $this->pdo->prepare("INSERT INTO users (nom, email, role, competences_maitrisees, competences_a_travailler, password) 
-        VALUES (:nom, :email, :role, :competences_maitrisees, :competences_a_travailler, :password)");
-        
-        return $stmt->execute([
-            'nom' => $user->getNom(),
-            'email' => $user->getEmail(),
-            'role' => $user->getRole(),
-            'competences_maitrisees' => $user->getCompetencesMaitrisees() ?? '',
-            'competences_a_travailler' => $user->getCompetencesATravailler() ?? '',
-            'password' => $user->getPassword() 
-        ]);}
+    public function save(\Entities\User $user): bool {
+        $query = "INSERT INTO users (nom, email, role, competences_maitrisees, competences_a_travailler, password) 
+                  VALUES (:nom, :email, :role, :comp_m, :comp_t, :password)";
+          
+        $stmt = $this->pdo->prepare($query);
+
+        $nom = $user->getNom();
+        $email = $user->getEmail();
+        $role = $user->getRole();
+        $comp_m = $user->getCompetencesMaitrisees();
+        $comp_t = $user->getCompetencesATravailler();
+        $password = $user->getPassword(); 
+
+        $stmt->bindParam(':nom', $nom);
+        $stmt->bindParam(':email', $email);
+        $stmt->bindParam(':role', $role);
+        $stmt->bindParam(':comp_m', $comp_m);
+        $stmt->bindParam(':comp_t', $comp_t);
+        $stmt->bindParam(':password', $password); 
+
+        return $stmt->execute();
+    }
 }
