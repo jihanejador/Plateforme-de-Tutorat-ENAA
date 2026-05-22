@@ -19,13 +19,16 @@ $action = $_GET['action'] ?? '';
 try {
    
     
+    
     if ($action === 'login' && $_SERVER['REQUEST_METHOD'] === 'POST') {
         $email = $_POST['email'];
         $password = $_POST['password'];
 
+       
         $user = $userRepo->findByEmail($email);
         
-        if ($user && $password === '123456') { 
+        
+        if ($user && $password === $user->getPassword()) { 
             $_SESSION['user_id'] = $user->getId();
             $_SESSION['user_nom'] = $user->getNom();
             $_SESSION['user_role'] = $user->getRole(); 
