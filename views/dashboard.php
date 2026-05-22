@@ -14,7 +14,7 @@ $ticket = $ticketRepo->findAllPending();
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>PeerSync - Tableau de Bord</title>
+    <title>Plateforme de Tutorat ENAA - Tableau de Bord</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-50 font-sans">
