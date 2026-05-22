@@ -33,8 +33,8 @@ class HelpRequest {
     public function getTechnologie(): string { return $this->technologie; }
     public function setTechnologie(string $tech): void { $this->technologie = $tech; }
 
-    public function getStatut(): Statut { return $this->statut; }
-    public function setStatut(Statut $statut): void { $this->statut = $statut; }
+    public function getStatut(): string { return $this->statut; } 
+    public function setStatut(string $statut): void { $this->statut = $statut; } 
 
     public function getApprenantId(): int { return $this->apprenantId; }
     public function setApprenantId(int $id): void { $this->apprenantId = $id; }
