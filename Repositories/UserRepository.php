@@ -27,4 +27,17 @@ class UserRepository {
         $user->setCompetencesATravailler($row->competences_a_travailler);
         return $user;
     }
+    public function findById(int $id): ?User {
+        $stmt = $this->pdo->prepare("SELECT * FROM users WHERE id = :id");
+        $stmt->execute(['id'=> $id]);
+        $row = $stmt->fetch(PDO::FETCH_OBJ);
+        if(!$row) return null;
+
+        $user = new User();
+        $user->setId((int)$row->id);
+        $user->setNom($row->nom);
+        $user->setEmail($row->email);
+        $user->setRole($row->role);
+        return $user;
+    }
 }
