@@ -38,7 +38,7 @@ class TicketRepository {
             $ticket->setTitre($row->titre);
             $ticket->setDescription($row->description);
             $ticket->setTechnologie($row->technologie);
-            $ticket->setStatut(Statut::from($row->statut));
+            $ticket->setStatut($row->statut);
             $ticket->setApprenantId((int)$row->apprenant_id);
             $tickets[] = $ticket;
         }
