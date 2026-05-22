@@ -45,4 +45,17 @@ class UserRepository {
         $user->setCompetencesATravailler($row->competences_a_travailler ?? '');
         return $user;
     }
+
+    public function save(User $user): bool {
+        $stmt = $this->pdo->prepare("INSERT INTO users (nom, email, role, competences_maitrisees, competences_a_travailler, password) 
+        VALUES (:nom, :email, :role, :competences_maitrisees, :competences_a_travailler, :password)");
+        
+        return $stmt->execute([
+            'nom' => $user->getNom(),
+            'email' => $user->getEmail(),
+            'role' => $user->getRole(),
+            'competences_maitrisees' => $user->getCompetencesMaitrisees() ?? '',
+            'competences_a_travailler' => $user->getCompetencesATravailler() ?? '',
+            'password' => $user->getPassword() 
+        ]);}
 }
