@@ -70,3 +70,6 @@ try{
         exit();
     }
 }
+catch(\Exception $e){
+    die("Erreur Metier Critique :" . $e->getMessage());
+}
