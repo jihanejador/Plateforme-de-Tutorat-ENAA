@@ -42,5 +42,9 @@ try{
         $ticket = new \Entities\HelpRequest();
         $ticket->setId($ticketId);
         $ticket->setApprenantId(1);
+        $ticket->assignTo($tuteurObj);
+
+        $ticketRepo->update($ticket);
+        header('Location: dashboard.php?success=ticket_assigned');
     }
 }
