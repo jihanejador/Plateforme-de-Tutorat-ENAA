@@ -18,9 +18,9 @@ class TicketRepository {
         VALUES (:titre, :description, :technologie, :statut, :apprenant_id)");
         return $stmt->execute([
             'titre'=> $ticket->getTitre(),
-            'description'=> $ticket->getDescripition(),
+            'description'=> $ticket->getDescription(),
             'technologie'=> $ticket->getTechnologie(),
-            'statut'=> $ticket->getStatut(),
+            'statut'=> $ticket->getStatut()->value,
             'apprenant_id'=> $ticket->getApprenantId()
         ]);
     }
@@ -36,7 +36,7 @@ class TicketRepository {
             $ticket = new HelpRequest();
             $ticket->setId((int)$row->id);
             $ticket->setTitre($row->titre);
-            $ticket->srtDescription($row->description);
+            $ticket->setDescription($row->description);
             $ticket->setTechnologie($row->technologie);
             $ticket->setStatut(Statut::from($row->statut));
             $ticket->setApprenantId((int)$row->apprenant_id);
