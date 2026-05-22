@@ -14,11 +14,14 @@ class User{
     public function getId(): ?int {return $this->id;}
     public function setId(int $id): void { $this->id = $id;}
 
-    public function getNom(): ?int { return $this->id;}
+    public function getNom(): ?int { return $this->nom;}
     public function setNom(string $nom): void { $this->nom = $nom; }
 
-    public function getEmail(): string { return $this->role; }
+    public function getEmail(): string { return $this->email; }
     public function setEmail(string $email): void { $this->email = $email; }
+
+    public function getRole(): string { return $this->role; } 
+    public function setRole(string $role): void { $this->role = $role; }
 
     public function getCompetencesMaitrisees(): ?string { return $this->competencesMaitrisees; }
     public function setCompetencesMaitrisees(?string $comp): void { $this->competencesMaitrisees = $comp; }
