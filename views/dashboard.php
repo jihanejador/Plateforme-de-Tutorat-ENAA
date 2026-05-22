@@ -1,17 +1,20 @@
 <?php
 session_start();
 
-if(!isset ($_SESSION['user_id'])){
+
+if (!isset($_SESSION['user_id']) || empty($_SESSION['user_id'])) {
     header('Location: login.php');
     exit();
 }
+
 require_once __DIR__ . '/../config/Database.php';
 require_once __DIR__ . '/../Enums/Statut.php';
 require_once __DIR__ . '/../Entities/HelpRequest.php';
 require_once __DIR__ . '/../Repositories/TicketRepository.php';
 
 $database = new Database();
-$ticketRepo = new \Repositories\TicketRepository($database->pdo);
+$db = $database->getConnection();
+$ticketRepo = new \Repositories\TicketRepository($db);
 
 $tickets = $ticketRepo->findAllPending();
 ?>
