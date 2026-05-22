@@ -9,3 +9,4 @@ $database = new Databasr();
 $ticketRepo = new \Repositories\TicketRepository($database->pdo);
 
 $ticket = $ticketRepo->findAllPending();
+?>
