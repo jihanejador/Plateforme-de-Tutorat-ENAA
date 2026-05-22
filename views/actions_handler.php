@@ -53,5 +53,11 @@ try{
         $ticketId = (int)$_POST['ticket_id'];
         $note = (int)$_POST['note'];
         $commentaire = $_POST['commentaire'];
+
+        $ticket = new \Entities\HelpRequest();
+        $ticket->setId($ticketId);
+        $ticket->setStatut(\Enums\Statut::RESOLVED);
+        $ticket->setTuteurId(3); //lie au tuteur youssef
+        $ticketRepo->update($ticket);
     }
 }
