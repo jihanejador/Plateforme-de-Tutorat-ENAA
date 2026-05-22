@@ -20,7 +20,7 @@ class TicketRepository {
             'titre'=> $ticket->getTitre(),
             'description'=> $ticket->getDescription(),
             'technologie'=> $ticket->getTechnologie(),
-            'statut'=> $ticket->getStatut()->value,
+            'statut'=> $ticket->getStatut(),
             'apprenant_id'=> $ticket->getApprenantId()
         ]);
     }
