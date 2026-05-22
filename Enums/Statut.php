@@ -1,9 +1,8 @@
 <?php
 namespace Enums;
 
-enum Statut: string{
+enum Statut: string {
     case PENDING = 'PENDING';
-    case ASSIGNED ='ASSIGNED';
-    case RSOLVER = 'RESOLVED';
-
+    case ASSIGNED = 'ASSIGNED';
+    case RESOLVED = 'RESOLVED';
 }
