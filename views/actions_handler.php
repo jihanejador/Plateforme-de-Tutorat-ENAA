@@ -42,24 +42,24 @@ try {
     }
 
     
+    
     if ($action === 'register' && $_SERVER['REQUEST_METHOD'] === 'POST') {
         $nom = $_POST['nom'];
         $email = $_POST['email'];
         $role = $_POST['role'];
+        $password = $_POST['password']; 
         $competences = $_POST['competences'] ?? '';
 
-        
         if ($userRepo->findByEmail($email)) {
             header('Location: register.php?error=email_exists');
             exit();
         }
 
-       
         $user = new \Entities\User();
         $user->setNom($nom);
         $user->setEmail($email);
         $user->setRole($role);
-        $user->setPassword('123456'); 
+        $user->setPassword($password); 
 
         if ($role === 'TUTEUR') {
             $user->setCompetencesMaitrisees($competences);
@@ -69,7 +69,6 @@ try {
             $user->setCompetencesMaitrisees('');
         }
 
-        
         if ($userRepo->save($user)) {
             header('Location: login.php?success=registered');
             exit();
