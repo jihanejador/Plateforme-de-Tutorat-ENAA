@@ -15,7 +15,7 @@ $ticketsEnAttente = $ticketRepo->findAllPending();
     <?php foreach ($ticketsEnAttente as $ticket): ?>
         <div class="bg-white p-4 rounded shadow">
             <h2 class="text-xl font-bold"><?= htmlspecialchars($ticket->getTitre()) ?></h2>
-            <p class="text-gray-600"><?= htmlspecialchars($ticket->getDescripition()) ?></p>
+            <p class="text-gray-600"><?= htmlspecialchars($ticket->getDescription()) ?></p>
             <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded">  
                 <?= htmlspecialchars($ticket->getTechnologie()) ?>
             </span>

@@ -1,14 +1,14 @@
 <?php
 session_start();
 require_once __DIR__ . '/../config/Database.php';
-require_once __DIR__ . '/../Enums/Status.php';
+require_once __DIR__ . '/../Enums/Statut.php';
 require_once __DIR__ . '/../Entities/HelpRequest.php';
 require_once __DIR__ . '/../Repositories/TicketRepository.php';
 
-$database = new Databasr();
+$database = new Database();
 $ticketRepo = new \Repositories\TicketRepository($database->pdo);
 
-$ticket = $ticketRepo->findAllPending();
+$tickets = $ticketRepo->findAllPending();
 ?>
 <!DOCTYPE html>
 <html lang="fr">
