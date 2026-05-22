@@ -1,116 +1,56 @@
 <?php
-
 session_start();
-require_once __DIR__ . '/../config/Database.php';
-require_once __DIR__ . '/../Enums/Statut.php';
-require_once __DIR__ . '/../Entities/User.php';
-require_once __DIR__ . '/../Entities/HelpRequest.php';
-require_once __DIR__ . '/../Entities/Review.php';
-require_once __DIR__ . '/../Repositories/TicketRepository.php';
-require_once __DIR__ . '/../Repositories/UserRepository.php';
 
-$database = new Database();
-$db = $database->getConnection(); 
-$ticketRepo = new \Repositories\TicketRepository($db);
-$userRepo = new \Repositories\UserRepository($db);
-
-$action = $_GET['action'] ?? '';
-
-try {
-   
-    if ($action === 'login' && $_SERVER['REQUEST_METHOD'] === 'POST') {
-        $email = $_POST['email'];
-        $password = $_POST['password'];
-
-       
-        $user = $userRepo->findByEmail($email);
-
-        
-        if ($user && $password === '123456') { 
-            $_SESSION['user_id'] = $user->getId();
-            $_SESSION['user_nom'] = $user->getNom();
-            $_SESSION['user_role'] = $user->getRole(); 
-
-            header('Location: dashboard.php');
-            exit();
-        } else {
-            header('Location: login.php?error=auth_failed');
-            exit();
-        }
-    }
-
-    
-    if ($action === 'create' && $_SERVER['REQUEST_METHOD'] === 'POST') {
-       
-        if (!isset($_SESSION['user_id'])) {
-            header('Location: login.php');
-            exit();
-        }
-
-        $ticket = new \Entities\HelpRequest();
-        $ticket->setTitre($_POST['titre']);
-        $ticket->setDescription($_POST['description']);
-        $ticket->setTechnologie($_POST['technologie']);
-        $ticket->setStatut(\Enums\Statut::PENDING);
-        $ticket->setApprenantId((int)$_SESSION['user_id']); 
-        $ticketRepo->save($ticket);
-        header('Location: dashboard.php?success=ticket_created');
-        exit();
-    }
-
-    
-    if ($action === 'assign') {
-        if (!isset($_SESSION['user_id']) || $_SESSION['user_role'] !== 'TUTEUR') {
-            die("Erreur : Seul un tuteur peut prendre en charge un ticket.");
-        }
-
-        $ticketId = (int)$_GET['ticket_id'];
-        $tuteurId = (int)$_SESSION['user_id']; 
-
-        $tuteurObj = $userRepo->findById($tuteurId);
-
-        if (!$tuteurObj) {
-            die("Erreur : Tuteur introuvable.");
-        }
-
-        $ticket = new \Entities\HelpRequest();
-        $ticket->setId($ticketId);
-        $ticket->setApprenantId(1); 
-        $ticket->assignTo($tuteurObj);
-
-        $ticketRepo->update($ticket);
-        header('Location: dashboard.php?success=ticket_assigned');
-        exit();
-    }
-
-    
-    if ($action === 'resolve' && $_SERVER['REQUEST_METHOD'] === 'POST') {
-        if (!isset($_SESSION['user_id'])) {
-            header('Location: login.php');
-            exit();
-        }
-
-        $ticketId = (int)$_POST['ticket_id'];
-        $note = (int)$_POST['note'];
-        $commentaire = $_POST['commentaire'];
-
-        $ticket = new \Entities\HelpRequest();
-        $ticket->setId($ticketId);
-        $ticket->setStatut(\Enums\Statut::RESOLVED);
-        $ticket->setTuteurId(3); 
-
-        $ticketRepo->update($ticket);
-
-        $review = new \Entities\Review();
-        $review->setNote($note);
-        $review->setCommentaire($commentaire);
-        $review->setHelpRequestId($ticketId);
-
-        $ticketRepo->saveReview($review);
-        header('Location: dashboard.php?success=session_resolved');
-        exit();
-    }
-
-} catch (\Exception $e) {
-    die("Erreur Metier Critique : " . $e->getMessage());
+if (isset($_SESSION['user_id'])) {
+    header('Location: dashboard.php');
+    exit();
 }
+?>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>PeerSync ENAA - Connexion</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 h-screen flex items-center justify-center font-sans">
+
+    <div class="bg-white p-8 rounded-xl shadow-md border border-gray-100 w-full max-w-md">
+        <div class="text-center mb-6">
+            <h1 class="text-3xl font-bold text-indigo-600">✨ PeerSync ENAA</h1>
+            <p class="text-gray-500 mt-2">Connectez-vous pour accéder à l'entraide</p>
+        </div>
+
+        <?php if (isset($_GET['error'])): ?>
+            <div class="bg-red-100 text-red-700 p-3 rounded-lg text-sm mb-4 text-center font-medium">
+                ❌ Email ou mot de passe incorrect.
+            </div>
+        <?php endif; ?>
+
+        <form action="actions_handler.php?action=login" method="POST" class="space-y-4">
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Adresse Email</label>
+                <input type="email" name="email" required placeholder="apprenant@enaa.ma"
+                       class="w-full border border-gray-300 rounded-lg p-2.5 focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+            </div>
+
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Mot de passe</label>
+                <input type="password" name="password" required placeholder="••••••••"
+                       class="w-full border border-gray-300 rounded-lg p-2.5 focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+            </div>
+
+            <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2.5 rounded-lg transition shadow-sm">
+                Se connecter
+            </button>
+        </form>
+
+        <div class="mt-6 text-xs text-center text-gray-400 bg-gray-50 p-2.5 rounded-lg border border-dashed">
+            💡 <strong>Comptes de Démo :</strong><br>
+            Tuteur: tuteur@enaa.ma | Password: 123456<br>
+            Apprenant: apprenant@enaa.ma | Password: 123456
+        </div>
+    </div>
+
+</body>
+</html>
