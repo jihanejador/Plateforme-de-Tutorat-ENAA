@@ -48,6 +48,12 @@ if (isset($_SESSION['user_id'])) {
             </div>
 
             <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Mot de passe</label>
+                <input type="password" name="password" required placeholder="Créez votre mot de passe"
+                       class="w-full border border-gray-300 rounded-lg p-2.5 focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+            </div>
+
+            <div>
                 <label class="block text-sm font-medium text-gray-700 mb-1">Vos Compétences (ex: PHP, JS, MySQL)</label>
                 <input type="text" name="competences" placeholder="ex: PHP, Tailwind CSS"
                        class="w-full border border-gray-300 rounded-lg p-2.5 focus:ring-2 focus:ring-indigo-500 focus:outline-none">
