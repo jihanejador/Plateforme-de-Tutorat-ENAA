@@ -74,7 +74,7 @@ $tickets = $ticketRepo->findAllPending();
                             <div class="flex justify-between items-start">
                                 <div>
                                     <span class="inline-block bg-amber-100 text-amber-800 text-xs font-semibold px-2.5 py-1 rounded mb-2">
-                                        🚀 <?= htmlspecialchars($ticket->getStatut()->value) ?>
+                                        🚀 <?= htmlspecialchars($ticket->getStatut()) ?>
                                     </span>
                                     <h3 class="text-xl font-bold text-gray-900"><?= htmlspecialchars($ticket->getTitre()) ?></h3>
                                     <p class="text-gray-600 mt-2 text-sm"><?= htmlspecialchars($ticket->getDescription()) ?></p>
