@@ -64,5 +64,9 @@ try{
         $review->setNote($note);
         $review->setCommentaire($commentaire);
         $review->setHelpRequestId($ticketId);
+
+        $ticketRepo->saveReview($review);
+        header('Location: dashboard.php?success=session_resolved');
+        exit();
     }
 }
