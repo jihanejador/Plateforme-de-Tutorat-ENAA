@@ -48,4 +48,10 @@ try{
         header('Location: dashboard.php?success=ticket_assigned');
         exit();
     }
+
+    if($action === 'resolve' && $_SERVER['REQUEST_METHOD'] ==='POST'){
+        $ticketId = (int)$_POST['ticket_id'];
+        $note = (int)$_POST['note'];
+        $commentaire = $_POST['commentaire'];
+    }
 }
