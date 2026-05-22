@@ -32,4 +32,8 @@ try{
         header('Location: dashboard.php?success=ticket_created');
         exit();
     }
+
+    if($action === 'assign'){
+        $ticketId = (int)$_GET['ticket_id'];
+    }
 }
